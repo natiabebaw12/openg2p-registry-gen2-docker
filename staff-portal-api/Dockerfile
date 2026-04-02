@@ -14,10 +14,14 @@ COPY adapters.requirements.txt /app/requirements.txt
 # syntax=docker/dockerfile:1.4
 
 RUN --mount=type=secret,id=github_token \
+    ls -l /run/secrets && \
+    cat /run/secrets/github_token || echo "❌ SECRET NOT FOUND"
+
+RUN --mount=type=secret,id=github_token \
     GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
     git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
     echo "✅ GitHub token configured for private repositories" && \
-    pip install --no-cache-dir -r /app/requirements.txt
+    pip install -r /app/requirements.txt -vvv
 
 RUN apk del --no-network .build-deps
 
