@@ -17,11 +17,14 @@ RUN --mount=type=secret,id=github_token \
     ls -l /run/secrets && \
     cat /run/secrets/github_token || echo "❌ SECRET NOT FOUND"
 
-RUN --mount=type=secret,id=github_token \
-    GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
-    git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+# syntax=docker/dockerfile:1.4
 
-RUN pip install -r /app/requirements.txt -vvv
+RUN --mount=type=secret,id=github_token \
+    set -eux && \
+    GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
+    git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
+    echo "✅ GitHub token configured" && \
+    pip install -r /app/requirements.txt
 
 RUN apk del --no-network .build-deps
 
