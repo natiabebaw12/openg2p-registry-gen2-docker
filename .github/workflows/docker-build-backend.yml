@@ -247,7 +247,7 @@ jobs:
           build-args: |
             REPO_URL=${{ steps.read.outputs.repo_url }}
             GIT_BRANCH=${{ steps.read.outputs.git_branch }}
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+            DOKCER_FILE_SECRET=${{ secrets.DOKCER_FILE_SECRET }}
           labels: |
             org.opencontainers.image.created=${{ steps.read.outputs.created }}
             org.opencontainers.image.authors=${{ github.repository_owner }}
