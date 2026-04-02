@@ -10,7 +10,14 @@ COPY local_deps/ /app/local_deps/
 
 # Install dependencies from the generated requirements file
 COPY adapters.requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN --mount=type=secret,id=github_token \
+    export GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
+    if [ -z "$GITHUB_TOKEN" ]; then echo "❌ SECRET IS EMPTY"; exit 1; fi && \
+    git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
+    pip install -r /app/requirements.txt -vvv && \
+    rm -f ~/.gitconfig
 
 RUN apk del --no-network .build-deps
 
