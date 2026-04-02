@@ -11,9 +11,8 @@ COPY local_deps/ /app/local_deps/
 # Copy the generated requirements (created by the workflow)
 COPY adapters.requirements.txt /app/requirements.txt
 
-# === SECURE FIX: Use GitHub token for private repos ===
 RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN \
-    git config --global url."https://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@github.com/".insteadOf "https://github.com/" && \
+    git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
     echo "✅ GitHub token configured for private repositories" && \
     pip install --no-cache-dir -r /app/requirements.txt
 
