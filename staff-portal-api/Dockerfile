@@ -18,10 +18,11 @@ RUN --mount=type=secret,id=github_token \
     cat /run/secrets/github_token || echo "❌ SECRET NOT FOUND"
 
 RUN --mount=type=secret,id=github_token \
-    GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
+    export GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
+    if [ -z "$GITHUB_TOKEN" ]; then echo "❌ SECRET IS EMPTY"; exit 1; fi && \
     git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
-    echo "✅ GitHub token configured for private repositories" && \
-    pip install -r /app/requirements.txt -vvv
+    pip install -r /app/requirements.txt -vvv && \
+    rm -f ~/.gitconfig
 
 RUN apk del --no-network .build-deps
 
