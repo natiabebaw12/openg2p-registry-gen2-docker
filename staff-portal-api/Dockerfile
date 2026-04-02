@@ -11,9 +11,11 @@ COPY local_deps/ /app/local_deps/
 # Copy the generated requirements (created by the workflow)
 COPY adapters.requirements.txt /app/requirements.txt
 
+# syntax=docker/dockerfile:1.4
+
 RUN --mount=type=secret,id=github_token \
-    DOKCER_FILE_SECRET=$(cat /run/secrets/github_token) && \
-    git config --global url."https://${DOKCER_FILE_SECRET}@github.com/".insteadOf "https://github.com/" && \
+    GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
+    git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
     echo "✅ GitHub token configured for private repositories" && \
     pip install --no-cache-dir -r /app/requirements.txt
 
