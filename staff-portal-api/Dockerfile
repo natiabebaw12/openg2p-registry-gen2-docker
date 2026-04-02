@@ -17,6 +17,8 @@ RUN --mount=type=secret,id=github_token \
     ls -l /run/secrets && \
     cat /run/secrets/github_token || echo "❌ SECRET NOT FOUND"
 
+# syntax=docker/dockerfile:1.4
+
 RUN --mount=type=secret,id=github_token \
     export GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
     if [ -z "$GITHUB_TOKEN" ]; then echo "❌ SECRET IS EMPTY"; exit 1; fi && \
