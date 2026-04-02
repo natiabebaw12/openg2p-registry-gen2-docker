@@ -1,4 +1,4 @@
-#!openg2p/openg2p-farmer-registry-celery:develop
+#!natiabebaw12/openg2p-nsr-registry-celery:develop
 
 # Dependencies
 git://v1.1.5//https://github.com/openg2p/openg2p-fastapi-common#subdirectory=openg2p-fastapi-common
