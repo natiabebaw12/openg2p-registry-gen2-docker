@@ -247,8 +247,7 @@ jobs:
           build-args: |
             REPO_URL=${{ steps.read.outputs.repo_url }}
             GIT_BRANCH=${{ steps.read.outputs.git_branch }}
-            secrets: |
-              github_token=${{ github.token }}
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           labels: |
             org.opencontainers.image.created=${{ steps.read.outputs.created }}
             org.opencontainers.image.authors=${{ github.repository_owner }}
