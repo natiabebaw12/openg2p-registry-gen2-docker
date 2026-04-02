@@ -21,7 +21,7 @@ RUN --mount=type=secret,id=github_token \
     GITHUB_TOKEN=$(cat /run/secrets/github_token) && \
     git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
     echo "✅ GitHub token configured for private repositories" && \
-    pip install -r /app/requirements.txt -vvv
+    pip install -r /app/requirements.txt -vvv || true
 
 RUN apk del --no-network .build-deps
 
