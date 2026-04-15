@@ -1,4 +1,4 @@
-#!natiabebaw12/openg2p-nsr-registry-partner-api:develop
+#!natiabebaw12/openg2p-nsr-registry-partner-api:1.0.0
 git://v1.1.6//https://github.com/openg2p/openg2p-fastapi-common#subdirectory=openg2p-fastapi-common
 git://v1.1.6//https://github.com/openg2p/openg2p-fastapi-common#subdirectory=openg2p-fastapi-auth
 git://v1.0.0//https://github.com/openg2p/openg2p-iam-service#subdirectory=iam-core
